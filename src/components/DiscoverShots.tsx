@@ -25,13 +25,11 @@ const DiscoverShots = () => {
     const [mainAlcohols, setMainAlcohols] = useState<string[]>([])
 
     const { data: shotBase, isLoading: shotBaseIsLoading, isError: shotBaseIsError } = ShotsAlcoholType();
-    // console.log('shotBase', shotBase)
 
     useEffect(() => {
         const allAlcohol = async () => {
             if (shotBase) {
                 let alcBase = await shotBase['results'].map((cb: any) => cb.name)
-                console.log('alcBase', alcBase)
                 setMainAlcohols(alcBase)
             } else {
                 console.log('ShotBase is not loaded or is empty')
@@ -39,6 +37,7 @@ const DiscoverShots = () => {
         }
         allAlcohol()
     }, [shotBase])
+
 
     if (shotBaseIsLoading) {
         return (<ActivityIndicator />);

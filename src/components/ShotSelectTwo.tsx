@@ -13,12 +13,15 @@ import { BackgroundPics } from '@/BackgroundPics';
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 
+const clamp = (min: number, val: number, max: number) => Math.max(min, Math.min(val, max));
+const fontSize = clamp(50, screenWidth * 0.05, 70);
+
 const ShotSelectTwo = () => {
     const [allShots, setallShots] = useState<Drink[]>([])
     const [displayName, setDisplayName] = useState<string>("")
     const [bgImage, setBgImage] = useState<any>("")
 
-    const { base_drink: alcohol } = useLocalSearchParams();
+    const { shot_drink: alcohol } = useLocalSearchParams();
 
     const { data: shotsByBase, isLoading: shotsByBaseIsLoading, isError: shotsByBaseIsError, error: shotsByBaseError } = ShotsByBaseDrinkApi(String(alcohol) || "");
     const { data: shotBase, isLoading: shotBaseLoading, isError: shotBaseIsError, error: shotBaseError } = ShotsAlcoholType();
@@ -33,6 +36,7 @@ const ShotSelectTwo = () => {
     }
 
 
+
     const getDisplayName = (alcohol: string | undefined) => {
         let foundItem;
         if (shotBase) {
@@ -40,8 +44,6 @@ const ShotSelectTwo = () => {
         }
         setDisplayName(foundItem ? foundItem.name : null)
     };
-
-
 
 
     useEffect(() => {
@@ -91,9 +93,6 @@ const ShotSelectTwo = () => {
 
                             <View style={styles.itemContainer}>
                                 <ToolTip text={item.drink_name}>
-                                    {/* <Link href={`/(home)/cocktails/cocktailSelect/${slugify(alcohol)}/${slugify(item.drink_name)}`}>
-                                        {String(item.drink_name).length < 16 ? String(item.drink_name) : String(item.drink_name).slice(0, 14) + "..."}
-                                    </Link> */}
                                     <Link href={`/(home)/shots/shotSelect/${slugify(alcohol)}/${slugify(item.drink_name)}`}>
                                         {String(item.drink_name).length < 16 ? String(item.drink_name) : String(item.drink_name).slice(0, 14) + "..."}
                                     </Link>
@@ -130,7 +129,7 @@ const styles = StyleSheet.create({
     title: {
         color: Colors.dark.text,
         fontFamily: 'WorkSans_900Black',
-        fontSize: 70,
+        fontSize: fontSize,
         textAlign: 'center',
         textShadowColor: 'black',
         textShadowRadius: 5,

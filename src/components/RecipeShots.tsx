@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 const recipeImage = { uri: '/Users/paulblack/VS Code/DrinksAppRA/assets/images/keeps_guide_assets/pexels-kelly.jpg' }
 
 import { Drink, DrinkRecipeProp } from '@/types';
-import { CocktailsByBaseDrinkApi } from '@/api/DrinksAPI';
+import { ShotsByBaseDrinkApi } from '@/api/DrinksAPI';
 import slugify from 'react-slugify';
 import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '@/constants/Colors';
@@ -18,7 +18,7 @@ const clamp = (min: number, val: number, max: number) => Math.max(min, Math.min(
 const fontSize = clamp(34, screenWidth * 0.05, 44);
 
 
-const Recipe: React.FC<DrinkRecipeProp> = ({ drinkName, alcohol }) => {
+const RecipeShots: React.FC<DrinkRecipeProp> = ({ drinkName, alcohol }) => {
 
     const [recipe, setRecipe] = useState<Drink[]>([])
     const [toMl, setToMl] = useState<string[][]>([])
@@ -26,31 +26,32 @@ const Recipe: React.FC<DrinkRecipeProp> = ({ drinkName, alcohol }) => {
     let [unitCount, setUnitCount] = useState(1)
     let [unitMeasure, setUnitMeasure] = useState("oz")
 
-
-
-    const { data: cocktailsByBase, isLoading, isError } = CocktailsByBaseDrinkApi(String(alcohol) || "");
+    const { data: shotsByBase, isLoading: shotsByBaseIsLoading, isError: shotsByBaseIsError } = ShotsByBaseDrinkApi(String(alcohol) || "");
 
     useEffect(() => {
-        const getDrinkRecipe = () => {
-            if (cocktailsByBase) {
-                cocktailsByBase.drinks.results.forEach((rec: Drink) => {
-                    if (
-                        rec.drink_name.toLowerCase() === drinkName ||
-                        slugify(rec.drink_name) === drinkName
-                    ) {
-                        setRecipe([rec]);
-                    }
-                });
-            }
-        };
 
+        if (shotsByBase) {
+            shotsByBase.drinks.results.forEach((rec: Drink) => {
+                if (
+                    rec.drink_name.toLowerCase() === drinkName ||
+                    slugify(rec.drink_name) === drinkName
+                ) {
+                    setRecipe([rec]);
+                }
+            });
 
-        if (cocktailsByBase) {
-            getDrinkRecipe()
         }
 
 
-    }, [cocktailsByBase, drinkName, alcohol]); // Dependency array
+    }, [drinkName, shotsByBase, alcohol]); // Dependency array
+
+    if (shotsByBaseIsLoading) {
+        return (<ActivityIndicator />);
+    }
+
+    if (shotsByBaseIsError) {
+        return (<View><Text>There's an error</Text></View>);
+    }
 
     // removes zero before decimals
     const formatUnits = (unit: any) => {
@@ -89,14 +90,6 @@ const Recipe: React.FC<DrinkRecipeProp> = ({ drinkName, alcohol }) => {
         return newText
     }
 
-
-    if (isLoading) {
-        return (<ActivityIndicator />);
-    }
-
-    if (isError) {
-        return (<Text>There's an error</Text>);
-    }
 
 
 
@@ -390,4 +383,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default Recipe;
+export default RecipeShots;

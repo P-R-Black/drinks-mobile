@@ -8,11 +8,6 @@ import slugify from 'react-slugify';
 import ShotSelectTwo from '@/components/ShotSelectTwo';
 
 const ShotDetailsScreen = () => {
-
-    const { base_drink: idString } = useLocalSearchParams();
-    console.log('[base_drink].tsx: idString', idString)
-
-
     return (
         <View style={styles.container}>
             <Stack.Screen

@@ -13,6 +13,9 @@ import { BackgroundPics } from '@/BackgroundPics';
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 
+const clamp = (min: number, val: number, max: number) => Math.max(min, Math.min(val, max));
+const fontSize = clamp(50, screenWidth * 0.05, 70);
+
 const AlcoholSelectTwo = () => {
     const [allDrinks, setAllDrinks] = useState<Drink[]>([]);
     const [displayName, setDisplayName] = useState<string>("");
@@ -63,9 +66,6 @@ const AlcoholSelectTwo = () => {
     if (cocktailBaseIsError) {
         return (<Text>Error Ocurred</Text>);
     }
-
-    console.log('allDrinks', allDrinks)
-
 
     return (
         <View>
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     title: {
         color: Colors.dark.text,
         fontFamily: 'WorkSans_900Black',
-        fontSize: 70,
+        fontSize: fontSize,
         textAlign: 'center',
         textShadowColor: 'black',
         textShadowRadius: 5,
