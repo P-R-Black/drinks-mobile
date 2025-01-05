@@ -13,10 +13,7 @@ const RootLayoutNav = () => {
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <QueryProvider>
         <Stack>
-          <Stack.Screen
-            name="(home)"
-            options={{ headerShown: false }}
-          />
+          <Stack.Screen name="(home)" options={{ headerShown: false }} />
         </Stack>
       </QueryProvider>
     </ThemeProvider >

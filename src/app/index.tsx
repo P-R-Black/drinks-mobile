@@ -1,9 +1,5 @@
-import { Link, Redirect } from 'expo-router';
-
-import { View, Text } from 'react-native'
+import { Redirect } from 'expo-router';
 import React from 'react'
-import HeroScreen from '@/components/HeroScreen';
-
 
 const index = () => {
     return (

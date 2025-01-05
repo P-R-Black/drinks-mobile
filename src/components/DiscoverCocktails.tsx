@@ -1,6 +1,8 @@
 import { Text, StyleSheet, View, ImageBackground, Dimensions, FlatList, ActivityIndicator } from 'react-native'
 import Colors from '@/constants/Colors';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'expo-router'
+
 
 const cocktailsImage = { uri: '/Users/paulblack/VS Code/DrinksAppRA/assets/images/keeps_guide_assets/cocktailsImage.jpg' }
 const defaultCocktailImage = { uri: '/Users/paulblack/VS Code/DrinksAppRA/assets/images/keeps_guide_assets/heroImage.jpeg' }
@@ -13,7 +15,7 @@ import { WorkSans_600SemiBold } from '@expo-google-fonts/work-sans';
 import { useFonts } from 'expo-font';
 import { LinearGradient } from "expo-linear-gradient";
 import { allDrinksApiFileProps } from '@/types';
-import { Link } from 'expo-router';
+import { Link, Stack } from 'expo-router';
 import { ToolTip } from './ToolTip';
 import { CocktailAlcoholType } from '@/api/DrinksAPI';
 
@@ -25,7 +27,6 @@ const DiscoverCocktails = () => {
     const [mainAlcohols, setMainAlcohols] = useState<string[]>([])
 
     const { data: cocktailBase, isLoading, isError } = CocktailAlcoholType();
-
 
 
     useEffect(() => {
@@ -48,7 +49,7 @@ const DiscoverCocktails = () => {
         return (<Text>There's been error</Text>);
     }
 
-
+    const sortedMainAlcohols = mainAlcohols.sort((a, b) => a.localeCompare(b))
 
     return (
         <View>
@@ -65,7 +66,7 @@ const DiscoverCocktails = () => {
                         <Text style={styles.subTitle}>Your Next Cocktail</Text>
                     </View>
                     <FlatList
-                        data={mainAlcohols}
+                        data={sortedMainAlcohols}
                         numColumns={2}
                         keyExtractor={(item) => item}
                         contentContainerStyle={styles.flatListContent}
@@ -73,7 +74,8 @@ const DiscoverCocktails = () => {
 
                             <View style={styles.itemContainer}>
                                 <ToolTip text={item}>
-                                    <Link href={`/(home)/cocktails/cocktailSelect/${item}`}>
+                                    <Link href={`/(home)/cocktails/cocktailSelect/${item}`}
+                                    >
                                         {item.length < 18 ? item : item.slice(0, 10) + "..."}
                                     </Link>
                                 </ToolTip>

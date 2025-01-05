@@ -18,6 +18,7 @@ export type allDrinksApiFileProps = {
 }
 
 export interface Drink {
+    localeCompare(b: Drink): number;
     id: number;
     drink_name: string;
     slug: string;

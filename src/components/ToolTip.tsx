@@ -5,7 +5,6 @@ import { TouchableOpacity } from 'react-native'
 
 export const ToolTip: React.FC<ToolTipProps> = ({ text, children }) => {
     const [isVisible, setIsVisible] = useState(false)
-
     return (
         <View style={styles.container} >
             <TouchableOpacity

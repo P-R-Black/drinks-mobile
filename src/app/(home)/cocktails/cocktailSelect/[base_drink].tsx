@@ -5,22 +5,18 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import AlcoholSelectTwo from '@/components/AlcoholSelectTwo';
 import slugify from 'react-slugify';
+import CocktailSelect from '.';
+
+
 
 const CocktailDetailsScreen = () => {
-
-
-    const { base_drink: idString } = useLocalSearchParams();
-    console.log('[base_drink].tsx: idString', idString)
-
 
     return (
         <View style={styles.container}>
             <Stack.Screen
-                options={{
-                    title: "Cocktails",
-                }}
+                options={{ headerShown: false }}
             />
-            <AlcoholSelectTwo />
+            <CocktailSelect />
         </View>
     )
 }
@@ -47,3 +43,21 @@ const styles = StyleSheet.create({
 });
 
 export default CocktailDetailsScreen
+
+
+// app /
+// |- (home)/
+// |    |- cocktails/
+// |    |     |-cocktailSelect/
+// |    |     |      |- _layout.tsx
+// |    |     |      |- [base_drink].tsx
+// |    |     |      |- index.tsx
+// |    |     |
+// |    |     |- _layout.tsx
+// |    |     |- index.tsx   
+// |    |
+// |    |- _layout.tsx
+// |    |- index.tsx
+// |
+// |- _layout.tsx
+// |- index.tsx

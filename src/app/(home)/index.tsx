@@ -1,7 +1,5 @@
-import { Redirect, Tabs } from 'expo-router';
 import HeroScreen from '@/components/HeroScreen';
-import CocktailsScreen from './cocktails';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 
 
 

@@ -2,7 +2,7 @@ import { View, Text, ActivityIndicator, ImageBackground, FlatList, Dimensions, S
 import React, { useEffect, useState } from 'react'
 import Colors from '@/constants/Colors';
 import { Drink } from '@/types'
-import { Link, useLocalSearchParams, useRouter } from 'expo-router';
+import { Link, router, Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { CocktailAlcoholType, CocktailsByBaseDrinkApi } from '@/api/DrinksAPI';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ToolTip } from './ToolTip';
@@ -51,6 +51,7 @@ const AlcoholSelectTwo = () => {
     })
 
 
+
     if (isLoading) {
         return (<ActivityIndicator />);
     }
@@ -67,8 +68,12 @@ const AlcoholSelectTwo = () => {
         return (<Text>Error Ocurred</Text>);
     }
 
+    const sortedAllDrinks = allDrinks.sort((a, b) => a.drink_name.localeCompare(b.drink_name))
+
+
     return (
         <View>
+
             <ImageBackground
                 source={bgImage}
                 resizeMode={'cover'}
@@ -82,7 +87,7 @@ const AlcoholSelectTwo = () => {
                         <Text style={styles.subTitle}>Drinks & Cocktails</Text>
                     </View>
                     <FlatList
-                        data={allDrinks}
+                        data={sortedAllDrinks}
                         numColumns={2}
                         keyExtractor={(item) => item.drink_name}
                         contentContainerStyle={styles.flatListContent}
@@ -90,7 +95,10 @@ const AlcoholSelectTwo = () => {
 
                             <View style={styles.itemContainer}>
                                 <ToolTip text={item.drink_name}>
-                                    <Link href={`/(home)/cocktails/cocktailSelect/${slugify(alcohol)}/${slugify(item.drink_name)}`}>
+                                    <Link
+                                        href={`/(home)/cocktails/cocktailSelect/${slugify(alcohol)}/${slugify(item.drink_name)}`}
+                                    >
+
                                         {String(item.drink_name).length < 16 ? String(item.drink_name) : String(item.drink_name).slice(0, 14) + "..."}
                                     </Link>
                                 </ToolTip>
