@@ -9,6 +9,7 @@ import slugify from 'react-slugify';
 import { LinearGradient } from 'expo-linear-gradient';
 import Colors from '@/constants/Colors';
 import { Feather } from '@expo/vector-icons';
+import { Stack } from 'expo-router';
 
 
 const screenHeight = Dimensions.get('window').height;
@@ -108,6 +109,9 @@ const RecipeShots: React.FC<DrinkRecipeProp> = ({ drinkName, alcohol }) => {
                     {recipe.map((rm) => (
 
                         <View key={rm.drink_name}>
+                            <Stack.Screen
+                                options={{ title: `${rm.drink_name}` ? `${rm.drink_name}` : "Recipe", headerBackTitle: "Back" }}
+                            />
                             <View style={styles.titleContainer}>
                                 <Text style={styles.title}>{rm.drink_name}</Text>
                             </View>

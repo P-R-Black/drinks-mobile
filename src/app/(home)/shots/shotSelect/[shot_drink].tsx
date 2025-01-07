@@ -1,21 +1,15 @@
-import { View, Text, Pressable, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import React from 'react'
-import { Link, Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { FontAwesome } from '@expo/vector-icons';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
-import AlcoholSelectTwo from '@/components/AlcoholSelectTwo';
-import slugify from 'react-slugify';
-import ShotSelectTwo from '@/components/ShotSelectTwo';
+import { Stack } from 'expo-router';
+import ShotSelect from '.';
 
 const ShotDetailsScreen = () => {
     return (
         <View style={styles.container}>
             <Stack.Screen
-                options={{
-                    title: "Shots",
-                }}
+                options={{ headerShown: false }}
             />
-            <ShotSelectTwo />
+            <ShotSelect />
         </View>
     )
 }

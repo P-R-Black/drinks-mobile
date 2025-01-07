@@ -21,6 +21,10 @@ export default function MenuStack() {
                 name="index"
                 options={{ title: "Discover Shots", headerShown: false }}
             />
+            <Stack.Screen
+                name="shotSelect"
+                options={{ headerShown: false }}
+            />
         </Stack>
     )
 };

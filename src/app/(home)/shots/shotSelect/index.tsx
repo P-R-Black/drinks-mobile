@@ -1,15 +1,36 @@
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import ShotSelectTwo from '@/components/ShotSelectTwo';
 
 
 
-const TabIndex = () => {
+const ShotSelect = () => {
 
     return (
-        <View>
+        <View style={styles.container}>
             <ShotSelectTwo />
         </View>
     );
 };
 
-export default TabIndex;
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: 'black',
+        flex: 1,
+
+    },
+    image: {
+        width: '100%',
+        aspectRatio: 1,
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginVertical: 10,
+    },
+    price: {
+        fontSize: 18,
+        fontWeight: '500',
+    },
+});
+
+export default ShotSelect;

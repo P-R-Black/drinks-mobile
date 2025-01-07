@@ -1,9 +1,9 @@
 import { View } from 'react-native'
 import React from 'react'
 import Recipe from '@/components/Recipe'
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 
-const cocktail_drink = () => {
+const CocktailDrink = () => {
     const { cocktail_base: base, cocktail_name: drinkName } = useLocalSearchParams();
 
     return (
@@ -13,4 +13,4 @@ const cocktail_drink = () => {
     )
 }
 
-export default cocktail_drink
+export default CocktailDrink

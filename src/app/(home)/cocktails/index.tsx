@@ -1,4 +1,3 @@
-import { Redirect, Tabs, useLocalSearchParams } from 'expo-router';
 import DiscoverCocktails from '@/components/DiscoverCocktails';
 import { View } from 'react-native';
 

@@ -1,5 +1,4 @@
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useEffect, useRef } from 'react'
 import { SearchResultsProps } from '@/types'
 import { useRouter } from 'expo-router';
 import slugify from 'react-slugify';

@@ -47,6 +47,8 @@ const DiscoverShots = () => {
         return (<Text>There's been an error!</Text>);
     }
 
+    const sortedMainAlcohols = mainAlcohols.sort((a, b) => a.localeCompare(b))
+
 
     return (
         <View>
@@ -63,7 +65,7 @@ const DiscoverShots = () => {
                         <Text style={styles.subTitle}>Your Next Shot</Text>
                     </View>
                     <FlatList
-                        data={mainAlcohols}
+                        data={sortedMainAlcohols}
                         numColumns={2}
                         keyExtractor={(item) => item}
                         contentContainerStyle={styles.flatListContent}

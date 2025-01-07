@@ -69,6 +69,9 @@ const ShotSelectTwo = () => {
         return (<Text>Error Ocurred</Text>);
     }
 
+    const sortedAllDrinks = allShots.sort((a, b) => a.drink_name.localeCompare(b.drink_name))
+
+
 
     return (
         <View>
@@ -85,7 +88,7 @@ const ShotSelectTwo = () => {
                         <Text style={styles.subTitle}>Drinks & Cocktails</Text>
                     </View>
                     <FlatList
-                        data={allShots}
+                        data={sortedAllDrinks}
                         numColumns={2}
                         keyExtractor={(item) => item.drink_name}
                         contentContainerStyle={styles.flatListContent}

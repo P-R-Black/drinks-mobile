@@ -1,4 +1,3 @@
-import { Redirect, Tabs } from 'expo-router';
 import { View } from 'react-native';
 import DiscoverShots from '@/components/DiscoverShots';
 

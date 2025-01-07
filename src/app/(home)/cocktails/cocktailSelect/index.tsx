@@ -1,6 +1,5 @@
-import { Redirect, Stack, Tabs, useLocalSearchParams, useRouter } from 'expo-router';
 import AlcoholSelectTwo from '@/components/AlcoholSelectTwo';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 
 
