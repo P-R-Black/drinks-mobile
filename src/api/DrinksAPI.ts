@@ -132,3 +132,109 @@ export const AllDrinksApi = () => {
         // cacheTime: 5 * 60 * 1000, // Keep the cache for 5 minutes (optional)
     });
 }
+
+const preprocessData = (data) => {
+    return data.map((item) => ({
+        ...item,
+        type: item.base_alcohol.includes('Shot') ? 'shot' : 'cocktail', // Example logic; adjust as needed
+    }));
+};
+
+
+export const FetchPaginatedData = async ({ queryKey, maxItems = Infinity }: FetchPaginatedDataParams) => {
+    let apiData: string | any[] = [];
+    let nextUrl = queryKey[0];
+    const headers = queryKey[1];
+
+    while (nextUrl && apiData.length < maxItems) {
+        try {
+            const response = await axios.get(nextUrl, { headers });
+            const processedData = preprocessData(response.data.results);
+            apiData = [...apiData, ...processedData];
+            nextUrl = response.data.next;
+        } catch (error) {
+            console.error('Error fetching paginated data:', error);
+            break;
+        }
+    }
+    return apiData;
+};
+
+// export const FetchPaginatedData = async ({ queryKey, maxItems = Infinity }: FetchPaginatedDataParams) => {
+
+//     const [url, headers] = queryKey;
+//     let apiData: any[] = [];
+//     let nextUrl = url;
+
+
+//     while (nextUrl && apiData.length < maxItems) {
+//         try {
+//             const response = await axios.get(nextUrl, { headers });
+//             apiData = [...apiData, ...response.data.results];
+//             nextUrl = response.data.next;
+
+
+//         } catch (error) {
+//             if (axios.isAxiosError(error)) {
+//                 console.error('Error fetching paginated data', error.message);
+//                 // Handle the error based on its type
+//                 if (error.response) {
+//                     // Server responded with a status other than 2xx
+//                     console.error('Server error:', error.response.status, error.response.data);
+//                 } else if (error.request) {
+//                     // Request was made but no response was received
+//                     console.error('No response received:', error.request);
+//                 } else {
+//                     // Something else happened
+//                     console.error('Error', error.message);
+//                 }
+//             } else {
+//                 console.error('An unexpected error occurred:', error);
+//             }
+//         }
+//     }
+//     return apiData;
+// }
+
+export const DrinksAPI = () => {
+
+    // const drinksApi = process.env.REACT_APP_PRODUCTION_DRINK_PUBLIC_KEY || ""; //Not sure why this isn't working anymore
+    // const drinksAPIKeyProduction = process.env.EXPO_PUBLIC_APP_PRODUCTION_KEY;
+
+    const drinksAPIKeyDev = process.env.EXPO_PUBLIC_APP_PRODUCTION_KEY || ""
+
+
+    const headers = {
+        'Authorization': `Api-Key ${drinksAPIKeyDev}`,
+        'Content-type': 'application/json',
+    }
+
+    const initialQuery = useQuery({
+        queryKey: ['initialData', { headers }],
+        queryFn: () => FetchPaginatedData(
+            {
+                queryKey: ["https://drinksapi.paulrblack.com/api/v1/", headers],
+                maxItems: 100,
+            }),
+        refetchOnWindowFocus: false,
+    })
+
+    const fullQuery = useQuery({
+        queryKey: ['fullData', { headers }],
+        queryFn: async () => FetchPaginatedData(
+            {
+                queryKey: ["https://drinksapi.paulrblack.com/api/v1/", headers],
+                // onUpdate: handleUpdate
+            }),
+        enabled: initialQuery.isSuccess,
+        initialData: initialQuery.data,
+        refetchOnWindowFocus: false,
+    });
+    return {
+        initialData: initialQuery.data,
+        fullData: fullQuery.data,
+        isLoading: initialQuery.isLoading || fullQuery.isLoading,
+        isError: initialQuery.isError || fullQuery.isError,
+    };
+
+}
