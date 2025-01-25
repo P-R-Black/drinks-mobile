@@ -40,6 +40,7 @@ export interface SearchResultItem {
 
 export interface SearchResultsProps {
     results: any;
+    onResultSelect: () => void; // Add this property
     // selectedItem: any;
     // handleClose: Function;
 };
@@ -57,4 +58,10 @@ export interface AlcoholSelectProps {
 export interface DrinkRecipeProp {
     drinkName: string[] | string | undefined;
     alcohol: string[] | string | undefined
+}
+
+export interface TabBarProps {
+    state: any;
+    descriptors: any;
+    navigation: any;
 }

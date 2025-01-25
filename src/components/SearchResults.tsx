@@ -10,7 +10,7 @@ import { WorkSans_400Regular } from '@expo-google-fonts/work-sans'
 import { WorkSans_500Medium } from '@expo-google-fonts/work-sans'
 
 
-const SearchResults: React.FC<SearchResultsProps> = ({ results }) => {
+const SearchResults: React.FC<SearchResultsProps> = ({ results, onResultSelect }) => {
     const router = useRouter();
 
 
@@ -30,13 +30,14 @@ const SearchResults: React.FC<SearchResultsProps> = ({ results }) => {
                                 ? `/(home)/shots/shotSelect/${slugify(item.base_alcohol)}/${slugify(item.drink_name)}`
                                 : `/(home)/cocktails/cocktailSelect/${slugify(item.base_alcohol)}/${slugify(item.drink_name)}`;
                             router.push(routeType as RelativePathString)
-                        }
-                        }
+
+                            // Clear the search input when a result is selected
+                            onResultSelect()
+                        }}
                     >
                         <Text style={styles.resultText}>{item.drink_name}</Text>
                     </TouchableOpacity>
-                )
-                }
+                )}
             />
         </View >
     );

@@ -1,13 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
 import { AntDesign, Feather, FontAwesome, FontAwesome5 } from '@expo/vector-icons';
-
-interface TabBarProps {
-    state: any;
-    descriptors: any;
-    navigation: any;
-}
-
+import { TabBarProps } from '@/types';
 
 const TabBar: React.FC<TabBarProps> = ({ state, descriptors, navigation }) => {
 
@@ -16,7 +10,7 @@ const TabBar: React.FC<TabBarProps> = ({ state, descriptors, navigation }) => {
         cocktails: (props: any) => <FontAwesome name="glass" size={26} colors={greyColor} {...props} />,
         shots: (props: any) => <FontAwesome5 name="glass-whiskey" size={26} colors={greyColor} {...props} />,
         search: (props: any) => <FontAwesome name="search" size={26} colors={greyColor} {...props} />,
-        menu: (props: any) => <FontAwesome name="bars" size={26} colors={greyColor} {...props} />
+        menu: (props: any) => <FontAwesome name="bars" size={26} colors={greyColor} {...props} />,
 
         // index: (props: any) => <AntDesign name="home" size={26} colors={greyColor} {...props} />,
         // cocktails: (props: any) => <Feather name="compass" size={26} colors={greyColor} {...props} />,
@@ -25,6 +19,8 @@ const TabBar: React.FC<TabBarProps> = ({ state, descriptors, navigation }) => {
         // menu: (props: any) => <AntDesign name="user" size={26} colors={greyColor} {...props} />
 
     }
+
+
     const primaryColor = "#0891b2";
     const greyColor = "#737373";
 

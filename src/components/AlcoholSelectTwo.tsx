@@ -2,7 +2,7 @@ import { View, Text, ActivityIndicator, ImageBackground, FlatList, Dimensions, S
 import React, { useEffect, useState } from 'react'
 import Colors from '@/constants/Colors';
 import { Drink } from '@/types'
-import { Link, router, Stack, useLocalSearchParams, useRouter } from 'expo-router';
+import { Link, useLocalSearchParams } from 'expo-router';
 import { CocktailAlcoholType, CocktailsByBaseDrinkApi } from '@/api/DrinksAPI';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ToolTip } from './ToolTip';

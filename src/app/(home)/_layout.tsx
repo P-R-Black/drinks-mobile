@@ -42,14 +42,20 @@ export default function TabLayout() {
           headerShown: false,
         }}
       />
-      {/* <Tabs.Screen
-                name="search"
-                options={{
-                    title: "Search",
-                    headerShown: false,
-                }}
-            /> */}
-
+      <Tabs.Screen
+        name="search"
+        options={{
+          title: "Search",
+          headerShown: true,
+        }}
+      />
+      <Tabs.Screen
+        name="menu"
+        options={{
+          title: "Menu",
+          headerShown: true,
+        }}
+      />
     </Tabs>
   )
 

@@ -15,7 +15,7 @@ import { WorkSans_600SemiBold } from '@expo-google-fonts/work-sans';
 import { useFonts } from 'expo-font';
 import { LinearGradient } from "expo-linear-gradient";
 import { allDrinksApiFileProps } from '@/types';
-import { Link, Stack } from 'expo-router';
+import { Link } from 'expo-router';
 import { ToolTip } from './ToolTip';
 import { CocktailAlcoholType } from '@/api/DrinksAPI';
 

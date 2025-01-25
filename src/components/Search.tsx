@@ -56,6 +56,12 @@ const Search = () => {
         }
     }, [input]);
 
+    // Clear the search input and results
+    const handleResultSelect = () => {
+        setInput('')
+        setResults([]);
+    }
+
     if (isError) {
         return <Text style={{ color: 'red', textAlign: 'center' }}>Error loading data</Text>;
     }
@@ -76,7 +82,7 @@ const Search = () => {
                 {isTyping || isLoading ? (
                     <ActivityIndicator size="large" color="white" />
                 ) : (
-                    <SearchResults results={results} />
+                    <SearchResults results={results} onResultSelect={handleResultSelect} />
                 )}
             </ImageBackground>
         </View>

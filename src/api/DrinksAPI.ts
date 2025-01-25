@@ -133,7 +133,7 @@ export const AllDrinksApi = () => {
     });
 }
 
-const preprocessData = (data) => {
+const preprocessData = (data: any[]) => {
     return data.map((item) => ({
         ...item,
         type: item.base_alcohol.includes('Shot') ? 'shot' : 'cocktail', // Example logic; adjust as needed
@@ -159,6 +159,52 @@ export const FetchPaginatedData = async ({ queryKey, maxItems = Infinity }: Fetc
     }
     return apiData;
 };
+
+
+
+
+export const DrinksAPI = () => {
+
+    // const drinksApi = process.env.REACT_APP_PRODUCTION_DRINK_PUBLIC_KEY || ""; //Not sure why this isn't working anymore
+
+    const drinksAPIKeyDev = process.env.EXPO_PUBLIC_APP_PRODUCTION_KEY || ""
+
+
+    const headers = {
+        'Authorization': `Api-Key ${drinksAPIKeyDev}`,
+        'Content-type': 'application/json',
+    }
+
+    const initialQuery = useQuery({
+        queryKey: ['initialData', { headers }],
+        queryFn: () => FetchPaginatedData(
+            {
+                queryKey: ["https://drinksapi.paulrblack.com/api/v1/", headers],
+                maxItems: 50,
+            }),
+        refetchOnWindowFocus: false,
+    })
+
+    const fullQuery = useQuery({
+        queryKey: ['fullData', { headers }],
+        queryFn: async () => FetchPaginatedData(
+            {
+                queryKey: ["https://drinksapi.paulrblack.com/api/v1/", headers],
+                // onUpdate: handleUpdate
+            }),
+        enabled: initialQuery.isSuccess,
+        initialData: initialQuery.data,
+        refetchOnWindowFocus: false,
+    });
+    return {
+        initialData: initialQuery.data,
+        fullData: fullQuery.data,
+        isLoading: initialQuery.isLoading || fullQuery.isLoading,
+        isError: initialQuery.isError || fullQuery.isError,
+    };
+
+}
+
 
 // export const FetchPaginatedData = async ({ queryKey, maxItems = Infinity }: FetchPaginatedDataParams) => {
 
@@ -195,46 +241,3 @@ export const FetchPaginatedData = async ({ queryKey, maxItems = Infinity }: Fetc
 //     }
 //     return apiData;
 // }
-
-export const DrinksAPI = () => {
-
-    // const drinksApi = process.env.REACT_APP_PRODUCTION_DRINK_PUBLIC_KEY || ""; //Not sure why this isn't working anymore
-    // const drinksAPIKeyProduction = process.env.EXPO_PUBLIC_APP_PRODUCTION_KEY;
-
-    const drinksAPIKeyDev = process.env.EXPO_PUBLIC_APP_PRODUCTION_KEY || ""
-
-
-    const headers = {
-        'Authorization': `Api-Key ${drinksAPIKeyDev}`,
-        'Content-type': 'application/json',
-    }
-
-    const initialQuery = useQuery({
-        queryKey: ['initialData', { headers }],
-        queryFn: () => FetchPaginatedData(
-            {
-                queryKey: ["https://drinksapi.paulrblack.com/api/v1/", headers],
-                maxItems: 100,
-            }),
-        refetchOnWindowFocus: false,
-    })
-
-    const fullQuery = useQuery({
-        queryKey: ['fullData', { headers }],
-        queryFn: async () => FetchPaginatedData(
-            {
-                queryKey: ["https://drinksapi.paulrblack.com/api/v1/", headers],
-                // onUpdate: handleUpdate
-            }),
-        enabled: initialQuery.isSuccess,
-        initialData: initialQuery.data,
-        refetchOnWindowFocus: false,
-    });
-    return {
-        initialData: initialQuery.data,
-        fullData: fullQuery.data,
-        isLoading: initialQuery.isLoading || fullQuery.isLoading,
-        isError: initialQuery.isError || fullQuery.isError,
-    };
-
-}
